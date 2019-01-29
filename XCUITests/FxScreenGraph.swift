@@ -166,6 +166,10 @@ class Action {
     static let SelectHomeAsBookmarksPage = "SelectHomeAsBookmarksPage"
     static let SelectHomeAsHistoryPage = "SelectHomeAsHistoryPage"
     static let SelectHomeAsCustomURL = "SelectHomeAsCustomURL"
+    static let SelectTopSitesRows_1 = "SelectTopSitesRows_1"
+    static let SelectTopSitesRows_2 = "SelectTopSitesRows_2"
+    static let SelectTopSitesRows_3 = "SelectTopSitesRows_3"
+    static let SelectTopSitesRows_4 = "SelectTopSitesRows_4"
 
     static let GoToHomePage = "GoToHomePage"
 
@@ -668,6 +672,35 @@ func createScreenGraph(for test: XCTestCase, with app: XCUIApplication) -> MMScr
         screenState.gesture(forAction: Action.TogglePocketInNewTab) { userState in
             userState.pocketInNewTab = !userState.pocketInNewTab
             app.switches["ASPocketStoriesVisible"].tap()
+        }
+
+
+        screenState.gesture(forAction: Action.SelectTopSitesRows_1) {userState in
+            //screenState.onEnterWaitFor(element: app.tables.cells["TopSitesRows"])
+            app.tables.cells["TopSitesRows"].tap()
+            app.staticTexts["1"].tap()
+            app.navigationBars.element(boundBy: 0).buttons.element(boundBy: 0).tap()
+        }
+
+        screenState.gesture(forAction: Action.SelectTopSitesRows_2) {userState in
+            //screenState.onEnterWaitFor(element: app.tables.cells["TopSitesRows"])
+            app.tables.cells["TopSitesRows"].tap()
+            app.staticTexts["2"].tap()
+            app.navigationBars.element(boundBy: 0).buttons.element(boundBy: 0).tap()
+        }
+
+        screenState.gesture(forAction: Action.SelectTopSitesRows_3) {userState in
+            //screenState.onEnterWaitFor(element: app.tables.cells["TopSitesRows"])
+            app.tables.cells["TopSitesRows"].tap()
+            app.staticTexts["3"].tap()
+            app.navigationBars.element(boundBy: 0).buttons.element(boundBy: 0).tap()
+        }
+
+        screenState.gesture(forAction: Action.SelectTopSitesRows_4) {userState in
+            //screenState.onEnterWaitFor(element: app.tables.cells["TopSitesRows"])
+            app.tables.cells["TopSitesRows"].tap()
+            app.staticTexts["4"].tap()
+            app.navigationBars.element(boundBy: 0).buttons.element(boundBy: 0).tap()
         }
 
         screenState.backAction = navigationControllerBackAction

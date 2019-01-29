@@ -8,6 +8,7 @@ let websiteUrl1 = "www.mozilla.org"
 let websiteUrl2 = "developer.mozilla.org"
 let invalidUrl = "1-2-3"
 let exampleUrl = "test-example.html"
+var urlList: [String] = ["www.reddit.com", "www.cnn.com", "www.cvs.com", "www.macys.com", "www.lanebryant.com", "www.linkedin.com", "www.target.com", "gap.com", "burberry.com", "www.walgreens.com", "www.amazon.com", "www.facebook.com", "www.twitter.com", "www.usc.edu"]
 
 class HomePageSettingsUITests: BaseTestCase {
     private func enterWebPageAsHomepage(text: String) {
@@ -166,5 +167,60 @@ class HomePageSettingsUITests: BaseTestCase {
         waitForExistence(app.tables["History List"], timeout: 3)
         // There is one entry
         XCTAssertEqual(app.tables["History List"].cells.count, 3)
+    }
+    
+    func testTopSitesCustomNumberOfRows() {
+        //Pre-populate top sites with 16 URLs so we can see all 4 rows
+        let prefilledTopSites = "testBookmarksDatabase1000-browser.db"
+        let arg = LaunchArguments.LoadDatabasePrefix + prefilledTopSites
+        app.terminate()
+        restart(app, args: [LaunchArguments.SkipIntro, LaunchArguments.SkipWhatsNew, arg])
+        //Run test for both iPhone and iPad devices as behavior differs between the two
+        if !iPad() {
+            //Ensure testing in portrait mode
+            XCUIDevice.shared.orientation = .portrait
+            //Check whether or not each of the custom row options changes UI and works correctly
+            navigator.performAction(Action.SelectTopSitesRows_1)
+            XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 1")
+            navigator.performAction(Action.GoToHomePage)
+            checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 4)
+            navigator.performAction(Action.SelectTopSitesRows_2)
+            XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 2")
+            navigator.performAction(Action.GoToHomePage)
+            checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 8)
+            navigator.performAction(Action.SelectTopSitesRows_3)
+            XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 3")
+            navigator.performAction(Action.GoToHomePage)
+            checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 12)
+            navigator.performAction(Action.SelectTopSitesRows_4)
+            XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 4")
+            navigator.performAction(Action.GoToHomePage)
+            checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 16)
+        } else if iPad(){
+             //Check whether or not each of the custom row options changes UI and works correctly
+             navigator.performAction(Action.SelectTopSitesRows_1)
+             XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 1")
+             navigator.performAction(Action.GoToHomePage)
+             checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 6)
+             navigator.performAction(Action.SelectTopSitesRows_2)
+             XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 2")
+             navigator.performAction(Action.GoToHomePage)
+             checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 12)
+             navigator.performAction(Action.SelectTopSitesRows_3)
+             XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 3")
+             navigator.performAction(Action.GoToHomePage)
+             checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 18)
+             navigator.performAction(Action.SelectTopSitesRows_4)
+             XCTAssertEqual(app.tables.cells["TopSitesRows"].label as String, "Top Sites, Rows: 4")
+             navigator.performAction(Action.GoToHomePage)
+             checkNumberOfExpectedTopSites(numberOfExpectedTopSites: 24)
+        }
+    }
+    //Function to check the number of top sites shown given a selected number of rows
+    private func checkNumberOfExpectedTopSites(numberOfExpectedTopSites: Int) {
+        waitForExistence(app.cells["TopSitesCell"])
+        XCTAssertTrue(app.cells["TopSitesCell"].exists)
+        let numberOfTopSites = app.collectionViews.cells["TopSitesCell"].cells.matching(identifier: "TopSite").count
+        XCTAssertEqual(numberOfTopSites, numberOfExpectedTopSites)
     }
 }
