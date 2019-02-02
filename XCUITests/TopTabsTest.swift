@@ -355,6 +355,14 @@ class TopTabsTestIphone: IphoneOnlyTestCase {
         navigator.goto(TabTray)
         XCTAssertTrue(app.buttons["TabTrayController.maskButton"].isEnabled)
     }
+    func testLongTapTabTray() {
+        if skipPlatform {return}
+        loadWebPage(url)
+        waitUntilPageLoad()
+        navigator.goto(TabTray)
+        app.collectionViews.cells[urlLabel].press(forDuration: 5, thenDragTo: app.textFields["Search Tabs"])
+        app.collectionViews.cells[urlLabel].swipeUp()
+    }
 }
 
     // Tests to check if Tab Counter is updating correctly after opening three tabs by tapping on '+' button and closing the tabs by tapping 'x' button
