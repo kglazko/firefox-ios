@@ -356,6 +356,12 @@ class TopTabsTestIphone: IphoneOnlyTestCase {
         XCTAssertTrue(app.buttons["TabTrayController.maskButton"].isEnabled)
     }
     func testLongTapTabTray() {
+        
+        let app = XCUIApplication()
+        //app.statusBars.otherElements["2:42 PM"]/*@START_MENU_TOKEN@*/.press(forDuration: 2.4);/*[[".tap()",".press(forDuration: 2.4);"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/
+        //app/*@START_MENU_TOKEN@*/.buttons["TabToolbar.tabsButton"]/*[[".otherElements[\"Navigation Toolbar\"]",".buttons[\"Show Tabs\"]",".buttons[\"TabToolbar.tabsButton\"]"],[[[-1,2],[-1,1],[-1,0,1]],[[-1,2],[-1,1]]],[0]]@END_MENU_TOKEN@*/.tap()
+        
+                
         if skipPlatform {return}
         loadWebPage(url)
         waitUntilPageLoad()
