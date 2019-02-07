@@ -3,7 +3,7 @@
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
 import XCTest
-
+let websiteUrl = "www.cnn.com"
 class NewTabSettingsTest: BaseTestCase {
     // Smoketest
     func testCheckNewTabSettingsByDefault() {
@@ -82,5 +82,18 @@ class NewTabSettingsTest: BaseTestCase {
         navigator.performAction(Action.OpenNewTabFromTabTray)
         waitForExistence(app.textFields["url"])
         waitForValueContains(app.textFields["url"], value: "mozilla")
+    }
+    
+    func testChangeNewTabSettingsLabel() {
+        //Go to New Tab settings and select Custom URL option
+        navigator.goto(NewTabSettings)
+        waitForExistence(app.navigationBars["New Tab"])
+        navigator.performAction(Action.SelectNewTabAsCustomURL)
+        //Enter a custom URL
+        app.textFields["HomePageSettingTextField"].typeText(websiteUrl)
+        app.textFields["HomePageSettingTextField"].typeText(XCUIKeyboardKey.return.rawValue)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        //Assert that the label showing up in Settings is equal to the URL entere (NOT CURRENTLY WORKING, SHOWING HOMEPAGE INSTEAD)
+        XCTAssertEqual(app.tables.cells["NewTab"].label, "New Tab, HomePage")
     }
 }
