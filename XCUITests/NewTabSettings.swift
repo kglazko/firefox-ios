@@ -95,5 +95,29 @@ class NewTabSettingsTest: BaseTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()
         //Assert that the label showing up in Settings is equal to the URL entere (NOT CURRENTLY WORKING, SHOWING HOMEPAGE INSTEAD)
         XCTAssertEqual(app.tables.cells["NewTab"].label, "New Tab, HomePage")
+        navigator.nowAt(SettingsScreen)
+        //Switch to Bookmark and check label
+        navigator.goto(NewTabSettings)
+        navigator.performAction(Action.SelectNewTabAsBookmarksPage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["NewTab"].label, "New Tab, Bookmarks")
+        navigator.nowAt(SettingsScreen)
+        //Switch to History and check the label
+        navigator.goto(NewTabSettings)
+        navigator.performAction(Action.SelectNewTabAsHistoryPage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["NewTab"].label, "New Tab, History")
+        navigator.nowAt(SettingsScreen)
+        //Switch to FXHome and check label
+        navigator.goto(NewTabSettings)
+        navigator.performAction(Action.SelectNewTabAsBlankPage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["NewTab"].label, "New Tab, Blank")
+        navigator.nowAt(SettingsScreen)
+        //Switch to FXHome and check label
+        navigator.goto(NewTabSettings)
+        navigator.performAction(Action.SelectNewTabAsFirefoxHomePage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["NewTab"].label, "New Tab, TopSites")
     }
 }

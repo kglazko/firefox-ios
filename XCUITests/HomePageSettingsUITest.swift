@@ -147,6 +147,24 @@ class HomePageSettingsUITests: BaseTestCase {
         app.navigationBars.buttons.element(boundBy: 0).tap()
         //Assert that the label showing up in Settings is equal to the URL entere (NOT CURRENTLY WORKING, SHOWING HOMEPAGE INSTEAD)
         XCTAssertEqual(app.tables.cells["Home"].label, "Home, HomePage")
+        navigator.nowAt(SettingsScreen)
+        //Switch to Bookmark and check label
+        navigator.goto(HomeSettings)
+        navigator.performAction(Action.SelectHomeAsBookmarksPage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["Home"].label, "Home, Bookmarks")
+        navigator.nowAt(SettingsScreen)
+        //Switch to History and check the label
+        navigator.goto(HomeSettings)
+        navigator.performAction(Action.SelectHomeAsHistoryPage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["Home"].label, "Home, History")
+        navigator.nowAt(SettingsScreen)
+        //Switch to FXHome and check label
+        navigator.goto(HomeSettings)
+        navigator.performAction(Action.SelectHomeAsFirefoxHomePage)
+        app.navigationBars.buttons.element(boundBy: 0).tap()
+        XCTAssertEqual(app.tables.cells["Home"].label, "Home, TopSites")
     }
 
     func testSetBookmarksAsHome() {
