@@ -140,12 +140,11 @@ class HomePageSettingsUITests: BaseTestCase {
         //Go to New Tab settings and select Custom URL option
         navigator.goto(HomeSettings)
         waitForExistence(app.navigationBars["Home"])
-        enterWebPageAsHomepage(text: websiteUrl1)
         //Enter a custom URL
-       // app.textFields["HomePageSettingTextField"].typeText("mozilla.org")
+        enterWebPageAsHomepage(text: websiteUrl1)
         app.textFields["HomePageSettingTextField"].typeText(XCUIKeyboardKey.return.rawValue)
         app.navigationBars.buttons.element(boundBy: 0).tap()
-        //Assert that the label showing up in Settings is equal to the URL entere (NOT CURRENTLY WORKING, SHOWING HOMEPAGE INSTEAD)
+        //Assert that the label showing up in Settings is equal to the URL entere (NOT CURRENTLY WORKING, SHOWING HOMEPAGE INSTEAD OF URL)
         XCTAssertEqual(app.tables.cells["Home"].label, "Home, HomePage")
         navigator.nowAt(SettingsScreen)
         //Switch to Bookmark and check label
