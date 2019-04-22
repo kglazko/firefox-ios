@@ -8,7 +8,7 @@ import XCTest
 let serverPort = Int.random(in: 1025..<65000)
 
 func path(forTestPage page: String) -> String {
-    return "http://localhost:\(serverPort)/test-fixture/\(page)"
+    return "http://localhost:\(serverPort)/test-fixtures/\(page)"
 }
 
 class BaseTestCase: XCTestCase {

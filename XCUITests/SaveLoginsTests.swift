@@ -10,7 +10,7 @@ let domainSecondLogin = "test2@example.com"
 let testLoginPage = path(forTestPage: "test-password.html")
 let testSecondLoginPage = path(forTestPage: "test-password-2.html")
 let savedLoginEntry = "test@example.com, http://localhost:\(serverPort)"
-let urlLogin = "linkedin.com"
+let urlLogin = path(forTestPage:"empty-login-form.html")
 let mailLogin = "iosmztest@mailinator.com"
 //The following seem to be labels that change a lot and make the tests break; aka volatile. Let's keep them in one place.
 let loginsListURLLabel = "Website, \(domain)"
@@ -181,11 +181,11 @@ class SaveLoginTest: BaseTestCase {
     }
 
     // Smoketest
-    /* Disabling this test until a local website can be used to prevent from false failures
+    // Disabling this test until a local website can be used to prevent from false failures
     func testSavedLoginAutofilled() {
         navigator.openURL(urlLogin)
         waitUntilPageLoad()
-        app.webViews.links["Sign in"].tap()
+        //app.webViews.links["Sign in"].tap()
         waitForExistence(app.webViews.textFields["Email"])
         app.webViews.textFields["Email"].tap()
         app.webViews.textFields["Email"].typeText(mailLogin)
@@ -195,7 +195,7 @@ class SaveLoginTest: BaseTestCase {
 
         app.webViews.buttons["Sign in"].tap()
         app.buttons["SaveLoginPrompt.saveLoginButton"].tap()
-
+        //saveLogin(givenUrl: urlLogin)
         // Clear Data and go to linkedin, fields should be filled in
         navigator.goto(SettingsScreen)
         navigator.performAction(Action.AcceptClearPrivateData)
@@ -207,5 +207,5 @@ class SaveLoginTest: BaseTestCase {
         XCTAssertEqual(emailValue as! String, mailLogin)
         let passwordValue = app.webViews.secureTextFields["Password"].value!
         XCTAssertEqual(passwordValue as! String, "••••••••")
-    }*/
+    }
 }
